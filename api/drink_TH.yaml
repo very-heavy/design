@@ -1,0 +1,54 @@
+    post:
+      summary: adds an drink information
+      operationId: addDrink
+      description: Adds an item to the system
+      responses:
+        '201':
+          description: item created
+        '400':
+          description: 'invalid input, object invalid'
+        '409':
+          description: an existing item already exists
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Drink'
+        description: Drink to add
+components:
+  schemas:
+    Drink:
+      type: object
+      required:
+        - id
+        - name
+        - price
+        - place
+        - rate
+        - category
+        - memo
+      properties:
+        id:
+          type: string
+          format: uuid
+          example: d290f1ee-6c54-4b01-90e6-d701748f0851
+        name:
+          type: string
+          example: 'Guiness Beer'
+        price:
+          type: integer
+          format: int32
+          example: 1000
+        place:
+          type: string
+          example: 'Ginza Bar'
+        rate:
+          type: integer
+          format: int32
+          example: 3
+        category:
+          type: string
+          example: 'Beer'
+        memo:
+          type: string
+          example: 'The most famous black beer'
