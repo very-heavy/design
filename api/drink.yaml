@@ -1,27 +1,12 @@
 openapi: 3.0.0
-# Added by API Auto Mocking Plugin
 servers:
-# Added by API Auto Mocking Plugin
-  - description: SwaggerHub API Auto Mocking
-    url: https://virtserver.swaggerhub.com/very-heavy/drink/1.0.0
-  - description: SwaggerHub API Auto Mocking
-    url: https://virtserver.swaggerhub.com/very-heavy/test/1.0.0
+  - description: ローカルホスト
+    url: http://localhost
 info:
-  description: This is a simple API!!!!
   version: "1.0.0"
-  title: SmpleSimple Inventory API
-  contact:
-    email: you@your-company.com
-  license:
-    name: Apache 2.0
-    url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
-tags:
-  - name: admins
-    description: Secured Admin-only calls
-  - name: developers
-    description: Operations available to regular developers
+  title: 飲料情報共有サイトのAPI
 paths:
-  /inventory:
+  /drink:
     get:
       tags:
         - developers
@@ -38,36 +23,59 @@ paths:
           schema:
             type: string
         - in: query
-          name: skip
-          description: number of records to skip for pagination
+          name: name
+          description: number of drinnks
           schema:
-            type: integer
-            format: int32
-            minimum: 0
+            type: string
         - in: query
-          name: limit
-          description: maximum number of records to return
+          name: price
+          description: price of drinks
           schema:
             type: integer
             format: int32
             minimum: 0
-            maximum: 50
+            maximum: 100000
+        - in: query
+          name: place
+          description: place we able to drink
+          schema:
+            type: string
+        - in: query
+          name: rate
+          description: evaluation of drink
+          schema:
+            type: integer
+            format: int32
+            minimum: 0
+            maximum: 5
+        - in: query
+          name: category
+          description: category of drink
+          schema:
+            type: string
+        - in: query
+          name: memo
+          description: memo
+          schema:
+            type: string
       responses:
         '200':
-          description: search results matching criteria
+          description: show detail of drink
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/InventoryItem'
+                  $ref: '#/components/schemas/Drink'
         '400':
           description: bad input parameter
+        '404':
+          description: not found page
+        '500':
+          description: internal server error
     post:
-      tags:
-        - admins
-      summary: adds an inventory item
-      operationId: addInventory
+      summary: adds an drink information
+      operationId: addDrink
       description: Adds an item to the system
       responses:
         '201':
@@ -76,47 +84,43 @@ paths:
           description: 'invalid input, object invalid'
         '409':
           description: an existing item already exists
+        '500':
+          description: Internal Server Error
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/InventoryItem'
-        description: Inventory item to add
+              $ref: '#/components/schemas/Drink'
+        description: Drink to add
 components:
   schemas:
-    InventoryItem:
+    Drink:
       type: object
       required:
-        - id
         - name
-        - manufacturer
-        - releaseDate
-      properties:
-        id:
-          type: string
-          format: uuid
-          example: d290f1ee-6c54-4b01-90e6-d701748f0851
-        name:
-          type: string
-          example: Widget Adapter
-        releaseDate:
-          type: string
-          format: date-time
-          example: '2016-08-29T09:12:33.001Z'
-        manufacturer:
-          $ref: '#/components/schemas/Manufacturer'
-    Manufacturer:
-      required:
-        - name
+        - price
+        - place
+        - rate
+        - category
+        - memo
       properties:
         name:
           type: string
-          example: ACME Corporation
-        homePage:
+          example: 'Guiness Beer'
+        price:
+          type: integer
+          format: int32
+          example: 1000
+        place:
           type: string
-          format: url
-          example: 'https://www.acme-corp.com'
-        phone:
+          example: 'Ginza Bar'
+        rate:
+          type: integer
+          format: int32
+          example: 3
+        category:
           type: string
-          example: 408-867-5309
-      type: object
+          example: 'Beer'
+        memo:
+          type: string
+          example: 'The most famous black beer'
