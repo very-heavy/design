@@ -1,0 +1,26 @@
+@startuml
+actor User
+
+'ページの表示'
+User -> UI : Access Submit Page
+activate UI
+UI -> System : Request Submit Page Rayouts
+activate System
+System -> UI : Response Submit Page Rayouts
+UI -> User : Show Submit Page
+
+'飲料情報の入力'
+User -> UI : Input Information & Click Submit Button
+UI -> UI : Validate Information
+UI -> System : Hand Over Information
+System -> System : Validate Information
+database DB
+System -> DB : Write Information
+DB -> System : Write Information Response
+System -> System : Transfrom Response
+System -> UI : Hand Over Information Response
+deactivate System
+UI -> User : Input Information Response
+deactivate UI
+
+@enduml
