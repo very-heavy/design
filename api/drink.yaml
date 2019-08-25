@@ -12,8 +12,6 @@ paths:
       operationId: findalldrink
       description: |
         findall drink information
-      parameters:
-        
       responses:
         '200':
           description: show detail of drink
