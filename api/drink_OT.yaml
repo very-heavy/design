@@ -1,11 +1,8 @@
     get:
-      tags:
-        - developers
-      summary: searches inventory
-      operationId: searchInventory
+      summary: findall
+      operationId: findalldrink
       description: |
-        By passing in the appropriate options, you can search for
-        available inventory in the system
+        findall drink information
       parameters:
         - in: query
           name: searchString
