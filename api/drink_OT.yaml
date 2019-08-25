@@ -1,0 +1,66 @@
+    get:
+      tags:
+        - developers
+      summary: searches inventory
+      operationId: searchInventory
+      description: |
+        By passing in the appropriate options, you can search for
+        available inventory in the system
+      parameters:
+        - in: query
+          name: searchString
+          description: pass an optional search string for looking up inventory
+          required: false
+          schema:
+            type: string
+        - in: query
+          name: name
+          description: number of drinnks
+          schema:
+            type: string
+        - in: query
+          name: price
+          description: price of drinks
+          schema:
+            type: integer
+            format: int32
+            minimum: 0
+            maximum: 100000
+        - in: query
+          name: place
+          description: place we able to drink
+          schema:
+            type: string
+        - in: query
+          name: rate
+          description: evaluation of drink
+          schema:
+            type: integer
+            format: int32
+            minimum: 0
+            maximum: 5
+        - in: query
+          name: category
+          description: category of drink
+          schema:
+            type: string
+        - in: query
+          name: memo
+          description: memo
+          schema:
+            type: string
+      responses:
+        '200':
+          description: show detail of drink
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Drink'
+        '400':
+          description: bad input parameter
+        '404':
+          description: not found page
+        '500':
+          description: internal server error
