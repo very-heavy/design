@@ -1,0 +1,31 @@
+@startuml
+
+actor ユーザ
+ユーザ -> UI : ページにアクセスする
+
+activate UI
+activate System
+UI -> System : アクセスリクエスト
+activate DB
+System -> DB : アクセスリクエスト
+System <- DB : ページの情報を渡す
+System -> System : ページの情報の成形を行う
+UI <- System : 成形されたページの情報を渡す
+
+ユーザ <- UI : ページを表示する
+ユーザ -> UI : 飲料の記事をクリックする
+UI -> System : リクエストを渡す
+
+System -> DB  : リクエストを渡す
+
+
+System <- DB : 飲料の名前、画像、レーティングを渡す
+System -> System : 飲料の名前、画像、レーティングの成形を行う
+
+deactivate DB
+UI <- System : 成形された飲料の名前、画像、レーティングを渡す
+deactivate System
+ユーザ <- UI : 成形された飲料の名前、画像、レーティングを渡す
+deactivate UI
+
+@enduml
